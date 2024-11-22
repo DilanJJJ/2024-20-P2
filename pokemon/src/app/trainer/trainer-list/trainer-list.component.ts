@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Trainer } from '../Trainer';
-import { dataTrainers } from '../dataTrainers';
+import { TrainerService } from '../trainer.service';
 
 @Component({
   selector: 'app-trainer-list',
@@ -11,14 +11,22 @@ export class TrainerListComponent implements OnInit {
   trainers: Array<Trainer> = [];
   selected: Boolean = false;
   selectedTrainer!: Trainer;
-  constructor() {}
 
-  getTraunersList(): Array<Trainer> {
-    return dataTrainers;
-  }
+  constructor(private trainerService: TrainerService) {}
 
   ngOnInit() {
-    this.trainers = this.getTraunersList();
+    this.getTrainersFromService();
+  }
+
+  getTrainersFromService(): void {
+    this.trainerService.getTrainersList().subscribe(
+      (data: Array<Trainer>) => {
+        this.trainers = data;
+      },
+      (error) => {
+        console.error('Error fetching trainers list', error);
+      }
+    );
   }
 
   onSelected(trainer: Trainer) {
@@ -26,3 +34,4 @@ export class TrainerListComponent implements OnInit {
     this.selectedTrainer = trainer;
   }
 }
+

@@ -1,39 +1,19 @@
-<div>
-  <div>
-    <div *ngIf="selected">
-      <app-trainer-detail
-        [trainerDetail]="selectedTrainer"
-      ></app-trainer-detail>
-    </div>
-    <table>
-      <thead>
-        <tr>
-          <th class="h4">Trainers's Name</th>
-          <th class="h4">Trainer's Image</th>
-          <th class="h4">Trainer's Samll snapshot</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          *ngFor="let t of trainers"
-          class="row-table"
-          (click)="onSelected(t)"
-        >
-          <td>
-            <dd>{{ t.name }}</dd>
-          </td>
-          <td>
-            <img
-              [src]="t.imageUrl"
-              alt="Trainer's Image"
-              class="img-thumbnail"
-            />
-          </td>
-          <td>
-            <dd>{{ t.smallSnopsies }}</dd>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Pokémon Trainers</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="h4">Trainer's Name</th>
+        <th class="h4">Trainer's Image</th>
+        <th class="h4">Trainer's Small Snapshot</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let t of trainers" class="row-table" [routerLink]="['/trainers', t.id]">
+        <td>{{ t.name }}</td>
+        <td><img [src]="t.imageUrl" alt="Trainer's Image" class="img-thumbnail" /></td>
+        <td>{{ t.smallSnopsies }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>

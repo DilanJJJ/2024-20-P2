@@ -1,8 +1,35 @@
-<div class="trainer-detail">
-  <h2>{{ trainerDetail.name }}</h2>
-  <img [src]="trainerDetail.imageUrl" [alt]="trainerDetail.name" />
-  <p><strong>Age:</strong> {{ trainerDetail.age }}</p>
-  <p><strong>About...</strong> {{ trainerDetail.bigSnopsies }}</p>
-  <p><strong>Pokemons:</strong></p>
-  <app-pokemon-list [pokemonList]="trainerDetail.pokemons"></app-pokemon-list>
+<div *ngIf="trainerDetail" class="container mt-4">
+  <h2 class="text-center">{{ trainerDetail.name }}</h2>
+  <img [src]="trainerDetail.imageUrl" class="img-fluid rounded mx-auto d-block" alt="{{ trainerDetail.name }}">
+  <p><strong>Age:</strong> {{ trainerDetail.age }} years</p>
+  <p><strong>Description:</strong> {{ trainerDetail.bigSnopsies }}</p>
+
+  <div *ngIf="pokemons.length > 0">
+    <h3 class="text-center mt-4">Pokémon List</h3>
+    <div class="row">
+      <!-- Cada Pokémon en su propia tarjeta -->
+      <div class="col-md-3 mb-4" *ngFor="let pokemon of pokemons">
+        <div class="card">
+          <img [src]="pokemon.imageUrl" class="card-img-top" alt="{{ pokemon.name }}" />
+          <div class="card-body">
+            <h5 class="card-title">{{ pokemon.name }}</h5>
+            <p class="card-text"><strong>Type:</strong> {{ pokemon.type }}</p>
+            <p class="card-text"><strong>Level:</strong> {{ pokemon.level }}</p>
+            <p class="card-text"><strong>Abilities:</strong></p>
+            <ul>
+              <li *ngFor="let ability of pokemon.abilities">{{ ability }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center mt-4">
+    <a routerLink="/trainers" class="btn btn-secondary">Back to Trainers List</a>
+  </div>
+</div>
+
+<div *ngIf="!trainerDetail" class="text-center">
+  <p>Loading trainer details...</p>
 </div>
